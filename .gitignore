@@ -1,0 +1,15 @@
+Makefile.in
+objects/**
+precompiled/**
+skepu_ann
+code.snippet
+*.dat
+*.pdf
+networks/*/data/**
+backup/**
+backup
+sed_backup/**
+data/cifar-10/**
+data/mnist/*
+data/convert_cifar_data
+caffe/**

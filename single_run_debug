@@ -1,0 +1,52 @@
+#!/bin/bash
+
+#how to use
+if [ "$#" -lt 2 ]; 
+then
+	echo "Usage: network_directory backend"
+	exit 1
+fi
+
+source scripts/includes.sh
+
+
+#args
+net_dir=$1
+backend=$2
+debug='debug'
+
+network_name=$(basename $net_dir)
+
+###run test
+echo "Running ${bold}$(basename $executable)${normal} with the network ${bold}$network_name${normal} using the backend ${bold}$backend${normal}."
+
+solver=$(find $net_dir -name "solver.prototxt")
+
+output=$(file_name $net_dir $backend $debug)
+
+echo "output file: $output"
+echo "solver: $solver"
+
+
+#create data dir if it does not exist
+mkdir -p $net_dir/data
+
+#run the program
+$executable $solver $backend 2>&1 | tee $output
+	
+echo "output saved to $output"
+echo ${PIPESTATUS[*]}
+#result
+if [ ${PIPESTATUS[0]} -eq 0 ]; then
+	echo "Run using the solver ${bold}$(basename $2)${normal}: SUCCESS!"
+	#plot_name="$backend\_$(basename $output).pdf"
+else
+	#echo "Printing last 30 lines of $output:"
+	#tail -n 30 $output 
+	echo "Run using the solver ${bold}$(basename $2)${normal}: FAILURE!"
+fi
+
+python scripts/debug_plot.py $output #plot_name
+
+
+draw_line 

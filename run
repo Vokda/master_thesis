@@ -1,0 +1,50 @@
+#!/bin/bash
+
+source scripts/includes.sh
+
+
+#args
+#$1 network
+#$2 backend
+#$3 savefile
+#for all network descriptions
+for network in $(ls $networks_dir)
+do
+	if [ -z $1 ];
+	then
+		echo no network selected!
+	fi
+	net_dir=$1
+	backend=$2
+	savefile=$3
+
+	#skip running the demo net
+	if [[ $network != "demo"* ]] || [[$network != "test"*]];
+	then
+		continue
+	fi
+
+	#create data dir if it does not exist
+	#mkdir -p $net_dir/data
+	
+	#remove old data and plots
+	#./scripts/clean_data.sh
+
+	echo "Running test for $network with $backend as backend."
+	for i in `seq 1 5` #...run each test 10 times
+	do
+		./single_run $net_dir $backend $savefile
+		#result=1
+
+		if [ $? -ne 0 ]
+		then
+			echo "Network $network failed! Stopping further runs with backend $backend"
+			break
+		fi
+
+	done #done with 10 runs for one net with one backend
+
+
+	echo "All tests done for $network with $backend."
+	draw_line 
+done

@@ -1,0 +1,267 @@
+#####################################################################################
+#	scrap paper. Contains code that may be used later, or maybe not.				#
+#	It is stored here to not take up a lot space in the files that will be compiled #
+#####################################################################################
+
+
+
+//specialization of get_casted_data
+//vector < T >
+template<> 
+inline const vector<MonochromeImage>& Layer::get_skepu_data<MonochromeImage>(const DataPackageBase* dpb) const
+{
+	return *(vector<skepu2::Matrix<double>>*)dpb->get_data();
+}
+
+template<>
+inline const vector<skepu2::Vector<double>>& 
+Layer::get_skepu_data<skepu2::Vector<double>>(const DataPackageBase* dpb) const
+{
+	return *(vector<skepu2::Vector<double>>*)dpb->get_data();
+}
+
+
+
+
+
+
+
+	return get_skepu_data<MonochromeImage>(data_vector.front());
+}
+
+template<>
+const vector<MonochromeImage>& Layer::get_first_casted_data<MonochromeImage>(const vector<DataPackageBase*>& data_vector) const
+{
+	if(data_vector.size() > 1)
+	{
+		cout << "WARNING! " << __PRETTY_FUNCTION__ << ": Expected only one bottom and is only using one." << endl;
+	}
+	return get_skepu_data<MonochromeImage>(data_vector.front());
+}
+
+//skepu::vector<int>
+template<>
+skepu2::Vector<int>& Layer::get_first_casted_data<int>(vector<DataPackageBase*>& data_vector) const
+{
+	if(data_vector.size() > 1)
+	{
+		cout << "WARNING! " << __PRETTY_FUNCTION__ << ": Expected only one bottom and is only using one." << endl;
+	}
+	return get_POD_data<int>(data_vector.front());
+}
+
+template<>
+const skepu2::Vector<int>& Layer::get_first_casted_data<int>(const vector<DataPackageBase*>& data_vector) const
+{
+	if(data_vector.size() > 1)
+	{
+		cout << "WARNING! " << __PRETTY_FUNCTION__ << ": Expected only one bottom and is only using one." << endl;
+	}
+	return get_POD_data<int>(data_vector.front());
+}
+
+//skepu::vector<double>
+template<>
+skepu2::Vector<double>& Layer::get_first_casted_data<double>(vector<DataPackageBase*>& data_vector) const
+{
+	if(data_vector.size() > 1)
+	{
+		cout << "WARNING! " << __PRETTY_FUNCTION__ << ": Expected only one bottom and is only using one." << endl;
+	}
+	return get_POD_data<double>(data_vector.front());
+}
+
+template<>
+const skepu2::Vector<double>& Layer::get_first_casted_data<double>(const vector<DataPackageBase*>& data_vector) const
+{
+	if(data_vector.size() > 1)
+	{
+		cout << "WARNING! " << __PRETTY_FUNCTION__ << ": Expected only one bottom and is only using one." << endl;
+	}
+	return get_POD_data<double>(data_vector.front());
+}
+template<>
+vector<MonochromeImage>& Layer::get_first_casted_data<MonochromeImage>(vector<DataPackageBase*>& data_vector) const
+{
+	if(data_vector.size() > 1)
+	{
+		cout << "WARNING! " << __PRETTY_FUNCTION__ << ": Expected only one bottom and is only using one." << endl;
+	}
+}
+
+
+#############    fully connected layer::forward specialization
+
+
+//specialization of forward_type_specific()
+
+//monochrome
+template<>
+inline void FullyConnectedLayer<MonochromeImage>::forward()
+{
+	cout << "Fully connected layer: forward()" << endl;
+	typedef vector<MonochromeImage> images;
+	//multiply input and weights
+	//sumerize the results
+
+	int n = 0; //indexing neuron
+
+	double result = 0;
+
+	//for each neuron multiply input and weights and sumerize the products
+	//each vector of weights <double> with each image matrix<double>
+	for(skepu2::Vector<double>& neuron_weights: _weights)
+	{
+		images& bottom = get_first_casted_data<images>(get_bottom_vector());
+		for(MonochromeImage& image: bottom) //MonochromeImage TODO: always performes batch learning with all data
+		{
+			//cout << image << endl;
+			result = _skepu_f.sum_of_products(image, neuron_weights);
+			cout << "output from forward:" << result << endl; //only for testing
+		}
+		n++;
+	}
+}
+
+//skepu vector <double>
+template<>
+inline void FullyConnectedLayer<skepu2::Vector<double>>::forward()
+{
+	cout << "Fully connected layer: forward()" << endl;
+	typedef vector<skepu2::Vector<double>> vector_double;
+	//multiply input and weights
+	//sumerize the results
+
+	int n = 0; //indexing neuron
+
+	double result = 0;
+
+	//for each neuron multiply input and weights and sumerize the products
+	//each vector of weights <double> with each image matrix<double>
+	for(skepu2::Vector<double>& neuron_weights: _weights)
+	{
+		vector_double& bottom = get_first_casted_data<vector_double>(get_bottom_vector());
+		for(skepu2::Vector<double>& image: bottom) //MonochromeImage TODO: always performes batch learning with all data
+		{
+			result = _skepu_f.sum_of_products(image, neuron_weights);
+			cout << "output from forward:" << result << endl; //only for testing
+		}
+		n++;
+	}
+}
+
+//rgb
+template<>
+inline void FullyConnectedLayer<ColouredImage>::forward()
+{
+	cout << "Fully connected layer: forward()" << endl;
+	typedef vector<ColouredImage> images;
+	//multiply input and weights
+	//sumerize the results
+
+	int n = 0; //indexing neuron
+
+	double result = 0;
+
+	//for each neuron multiply input and weights and sumerize the products
+	//each vector of weights <double> with each image matrix<double>
+	for(skepu2::Vector<double>& neuron_weights: _weights)
+	{
+		images& bottom = get_first_casted_data<images>(get_bottom_vector());
+		for(ColouredImage& image: bottom) //MonochromeImage TODO: always performes batch learning with all data
+		{
+			result = _skepu_f.sum_of_products(image, neuron_weights);
+			cout << "output from forward:" << result << endl; //only for testing
+		}
+		n++;
+	}
+}
+
+
+//generic definiton of forward_type_specific()
+template<typename T>
+void FullyConnectedLayer<T>::forward_type_specific(int& neuron_index, skepu2::Vector<double>& neuron_weights, processed_images& out)
+{
+	skepu2::Vector<T>& bottom = get_first_casted_data<skepu2::Vector<T>>(get_bottom_vector());
+	//for(T& image: bottom) //TODO: always performes batch learning with all data
+	for(unsigned i = 0; i < bottom.size(); ++i)
+	{
+		T& image = bottom[i];
+		out[i][neuron_index] = _skepu_f.sum_of_products(image, neuron_weights);
+		_skepu_f.activation(out[i]);
+		index++;
+	}
+}
+
+//monochrome specialization
+template<>
+void FullyConnectedLayer<MonochromeImage>::forward_type_specific(int& index, skepu2::Vector<double>& neuron_weights, processed_images& top)
+{
+	typedef vector<MonochromeImage> images;
+	images& bottom = get_first_casted_data<images>(get_bottom_vector());
+	for(unsigned i = 0; i < bottom.size(); ++i)
+	{
+		MonochromeImage& image = bottom[i];
+		top[i][index] = _skepu_f.sum_of_products(image, neuron_weights);
+		_skepu_f.activation(top);
+		index++;
+	}
+}
+
+//skepu vector double
+template<>
+void FullyConnectedLayer<skepu2::Vector<double>>::forward_type_specific(int& index, skepu2::Vector<double>& neuron_weights, processed_images& top)
+{
+	skepu2::Vector<double>& bottom = get_first_casted_data<skepu2::Vector<double>>(get_bottom_vector());
+	for( image: bottom) //TODO: always performes batch learning with all data
+	{
+		top[index] = _skepu_f.sum_of_products(image, neuron_weights);
+		_skepu_f.activation(top);
+		index++;
+	}
+}
+
+
+/*
+//ini weights specialization
+template<>
+inline void FullyConnectedLayer<MonochromeImage>::initialize_weights()
+{
+	cout << "--- Setting up weights for fully connected layer. ---" << endl;
+	cout << "Number of neurons in layer: " << _weights.size() << endl;
+	MonochromeImage image = get_first_casted_data<vector<MonochromeImage>>(get_bottom_vector()).front();
+	size_t image_size = image.size();
+	cout << "Number of weights per neuron: " << image_size << endl;
+
+	//set the weights for the neurons
+	//dependent on the dimensions of the bottom data;
+	//TODO multiple bottoms will not work in this case. 
+	for(auto& neuron_vector: _weights)
+	{
+		neuron_vector.resize(image_size);
+		
+		//set values between 0 and 1
+		//TODO depends on initalization method found in prototxt
+		_randomizer.uniform(neuron_vector);
+		//cout << "Weights:\n " << neuron_vector << endl;
+	}
+	cout << "--- Weight setup complete ---" << endl;
+}
+*/
+/*
+//monochrome
+template<>
+inline void FullyConnectedLayer<MonochromeImage>::forward()
+{
+	cout << "Fully connected layer: forward()" << endl;
+	//multiply input and weight
+	//sumerize the results
+
+	ProcessedImages& top = get_first_casted_batch<ProcessedImages>(get_top_vector());
+	Batch<MonochromeImage>& batch = get_first_casted_batch<images>(get_bottom_vector());
+
+	//for each neuron multiply input and weights and sumerize the products
+	//each vector of weights <double> with each image matrix<double>
+	_skepu_f.forward(images, _weights, top);
+}
+*/

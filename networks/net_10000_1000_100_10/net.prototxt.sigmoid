@@ -1,0 +1,233 @@
+#network according ot ciresan
+name: "Ciresan 2500x2000x1500x1000x500x10"
+layer
+{
+	name: "mnist"
+	type: "Data"
+	data_param
+	{
+#		all data should be in the data directory in its own subdirectory
+#		e.g.: project/data/data_set/
+		source: "mnist"
+		batch_size: 1
+	}
+	transform_param 
+	{
+		#subtaction is always done first in caffe 
+		#mean_value: 127.5
+		#scale the data set to -1 1 
+		# this is done by X/127.5 - 1
+		#scale: 0.00784313725
+		scale: 0.00390625; #0 - 1
+	}
+	top: "data"
+	top: "label"
+}
+
+#1st layer
+layer
+{
+	name: "hidden1"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 2500
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+			value: 1
+		}
+	}
+	top: "ip1"
+	bottom: "data"
+}
+
+layer 
+{
+	name: "sig"
+	type: "sigmoid"
+	bottom: "ip1"
+	top: "ip1"
+}
+
+#2nd layer
+layer
+{
+	name: "hidden2"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 2000
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+			value: 1
+		}
+	}
+	top: "ip2"
+	bottom: "ip1"
+}
+
+layer 
+{
+	name: "sig"
+	type: "sigmoid"
+	bottom: "ip2"
+	top: "ip2"
+}
+
+#3rd layer
+layer
+{
+	name: "hidden3"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 1500
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+			value: 1
+		}
+	}
+	top: "ip3"
+	bottom: "ip2"
+}
+
+
+layer 
+{
+	name: "sig"
+	type: "sigmoid"
+	bottom: "ip3"
+	top: "ip3"
+}
+
+#4th layer
+layer
+{
+	name: "hidden4"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 1000
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+			value: 1
+		}
+	}
+	top: "ip4"
+	bottom: "ip3"
+}
+
+
+layer 
+{
+	name: "sig"
+	type: "sigmoid"
+	bottom: "ip4"
+	top: "ip4"
+}
+
+#5th layer
+layer
+{
+	name: "hidden5"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 500
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+			value: 1
+		}
+	}
+	top: "ip5"
+	bottom: "ip4"
+}
+
+layer 
+{
+	name: "sig"
+	type: "sigmoid"
+	bottom: "ip5"
+	top: "ip5"
+}
+layer
+{
+	name: "hidden6"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 10
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+			value: 1
+		}
+	}
+	top: "ip6"
+	bottom: "ip5"
+}
+
+#layer
+#{
+#	name: "tanh6"
+#    type: "tanh"
+#	bottom: "ip6"
+#	top: "ip6"
+#}
+layer
+{
+	name: "loss"
+	type: "SoftmaxWithLoss"
+	bottom: "ip6"
+	bottom: "label"
+}
+
+#output
+#layer
+#{
+#	name: "output"
+#	type: "euclidiean"
+#	bottom: "ip5"
+#	bottom: "label"
+#}

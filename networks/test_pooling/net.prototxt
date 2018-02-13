@@ -1,0 +1,69 @@
+#simple ann that will learn the mnist 
+name: "demo convolutional"
+layer
+{
+	name: "input"
+	type: "Data"
+	data_param
+	{
+#		all data should be in the data directory in its own subdirectory
+#		e.g.: project/data/data_set/
+		source: "conv_test"
+#		size of batch
+		batch_size: 1
+	}
+	top: "data"
+	top: "label"
+}
+
+layer {
+  name: "pool1"
+  type: "Pooling"
+  bottom: "data"
+  top: "pool1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 1
+  }
+}
+
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "pool1"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+
+layer
+{
+	name: "fc2"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 10
+		weight_filler 
+		{
+			type: "xavier"
+		}
+		bias_filler 
+		{
+			type: "constant"
+		}
+	}
+	top: "ip2"
+	bottom: "pool2"
+}
+
+layer
+{
+	name: "output"
+	type: "SoftmaxWithLoss"
+	bottom: "ip2"
+	bottom: "label"
+}

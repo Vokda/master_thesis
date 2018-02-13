@@ -1,0 +1,84 @@
+#simple ann that will learn the mnist 
+name: "demo convolutional"
+layer
+{
+	name: "input"
+	type: "Data"
+	data_param
+	{
+#		all data should be in the data directory in its own subdirectory
+#		e.g.: project/data/data_set/
+		source: "conv_test"
+#		size of batch
+		batch_size: 1
+	}
+	top: "data"
+	top: "label"
+}
+
+#convolution
+layer {
+  name: "conv1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1"
+  convolution_param {
+    num_output: 3
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+
+#convolution
+layer {
+  name: "conv2"
+  type: "Convolution"
+  bottom: "conv1"
+  top: "conv2"
+  convolution_param {
+    num_output: 2
+    kernel_size: 2
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+layer
+{
+	name: "fc"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 10
+		weight_filler 
+		{
+			type: "xavier"
+		}
+		bias_filler 
+		{
+			type: "constant"
+		}
+	}
+	top: "ip1"
+	bottom: "conv2"
+}
+
+layer
+{
+	name: "output"
+	type: "SoftmaxWithLoss"
+	bottom: "ip1"
+	bottom: "label"
+}

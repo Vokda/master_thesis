@@ -1,0 +1,105 @@
+#!/bin/bash
+
+#how to use
+if [ "$#" -lt 4 ]; 
+then
+	echo "Usage: 
+    -n network_directory
+    -b backend
+    -o output_file
+    -d 1/0 (optional)"
+	exit 1
+fi
+
+source scripts/includes.sh
+
+#$(seq 0 $#)
+#read args
+for i in $@;
+do
+    case $i in
+        -n)
+            shift
+            net_dir=$1
+            shift
+            ;;
+        -b)
+            shift
+            backend=$1
+            shift
+            ;;
+        -o)
+            shift
+            output=$1
+            shift
+            ;;
+        -d)
+            shift
+            debug=$1
+            shift
+            ;;
+    esac
+done
+
+if [ -z "$debug" ]
+then
+    debug=0
+fi
+
+network_name=$(basename $net_dir)
+
+###run test
+echo "Running ${bold}$(basename $executable)${normal} with the network ${bold}$network_name${normal} using the backend ${bold}$backend${normal}."
+
+solver=$(find $net_dir -name "solver.prototxt")
+
+if [ -z "$ouput" ]
+then
+    output=$(file_name $net_dir $backend $debug)
+else
+    output=$net_dir/data/$output
+fi
+
+echo "output file: $output"
+echo "solver: $solver"
+
+#run the program
+$executable $solver $backend 2>&1 | tee $output
+	
+result=(${PIPESTATUS[*]})
+#echo "result list $result"
+echo "output saved to $output"
+#result
+if [ ${result[0]} -eq 0 ]; then
+	echo "Run using the solver ${bold}$(basename $2)${normal}: SUCCESS!"
+	#plot_name="$backend\_$(basename $output).pdf"
+else
+	#echo "Printing last 30 lines of $output:"
+	#tail -n 30 $output 
+	echo "Run using the solver ${bold}$(basename $2)${normal}: FAILURE!"
+    read -p "keep data? [y/n] " ans
+    if [ "$ans" == "n" ]
+    then
+        rm $output
+    fi
+fi
+
+
+#if [[ -z "$debug" ]];
+#then
+#	echo "plotting"
+#	python scripts/plot.py $output #plot_name
+#else
+#	#for debuging
+#	echo "debug plotting"
+#	python scripts/debug_plot.py $output #plot_name
+#fi
+
+
+#create data dir if it does not exist
+mkdir -p $net_dir/data
+
+#remove old data and plots
+#rm -f $net_dir/*.dat $net_dir/*.plot
+
+draw_line 

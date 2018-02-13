@@ -1,0 +1,101 @@
+#simple ann that will learn the mnist 
+name: "demo perceptron"
+layer
+{
+	name: "test"
+	type: "Data"
+	data_param
+	{
+#		all data should be in the data directory in its own subdirectory
+#		e.g.: project/data/data_set/
+		source: "conv_test"
+#		size of batch
+		batch_size: 1
+	}
+	transform_param 
+	{
+		#subtaction is always done first in caffe 
+#mean_value: 0.5
+		#scale the data set to -1 1 
+		# this is done by X/127.5 - 1
+#scale: 0.00784313725
+#		scale: 0.00390625; #x /256
+#scale: 2
+	}
+	top: "data"
+	top: "label"
+}
+
+#layer
+#{
+#	name: "fc1"
+#	type: "InnerProduct"
+#	inner_product_param
+#	{
+#		num_output: 9
+#		weight_filler 
+#		{
+#			type: "xavier"
+#		}
+##bias_filler
+##		{
+##			type: "constant"
+##			  value: 1
+##		}
+#	}
+#	top: "ip1"
+#	bottom: "data"
+#}
+#
+#layer 
+#{
+#		name: "tanh"
+#		  type: "tanh"
+#		  bottom: "ip1"
+#		  top: "ip1"
+#}
+
+layer
+{
+	name: "fc2"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 10
+		weight_filler 
+		{
+			type: "xavier"
+		}
+bias_filler
+		{
+            type: "constant"
+		  value: 1
+		}
+	}
+	top: "ip2"
+	bottom: "data"
+}
+
+
+#layer 
+#{
+#name: "tanh"
+#		  type: "tanh"
+#		  bottom: "ip1"
+#		  top: "ip1"
+#}
+#layer 
+#{
+#name: "sigmoid"
+#		  type: "sigmoid"
+#		  bottom: "ip1"
+#		  top: "ip1"
+#}
+
+layer
+{
+	name: "output"
+	type: "softmaxwithloss"
+	bottom: "ip2"
+	bottom: "label"
+}

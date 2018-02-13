@@ -1,0 +1,657 @@
+==27027== NVPROF is profiling process 27027, command: ./skepu_ann networks/ciresan_2500_2000_1500_1000_500_10//solver.prototxt cuda
+Backend set to cuda
+Net to be constructed according to networks/ciresan_2500_2000_1500_1000_500_10/net.prototxt
+Stochastic gradient descent solver selected.
+Overriding solver parameter, using program argument instead: cuda
+Backend selected: CUDA
+--------- Constructing network Ciresan 2500x2000x1500x1000x500x10 ---------
+Number of layers to create: 13
+Creating nodes (meta layers) to be sorted topologically.
+Topological Sort: Creating directed acyclical graph from network description.
+Topological Sort: Directed acyclic graph created.
+Topological Sort: sorting...
+done!
+Setting meta data...
+input layer: mnist
+Warning: Parser: unknown data set: data
+Parser: resolved unknown dataset.
+Dataset used: mnist
+done!
+Merging layers...
+Merging layer tanh1 with hidden1.
+Merging layer tanh2 with hidden2.
+Merging layer tanh3 with hidden3.
+Merging layer tanh4 with hidden4.
+Merging layer tanh5 with hidden5.
+Removing tanh1
+Removing tanh2
+Removing tanh3
+Removing tanh4
+Removing tanh5
+done!
+Setting deltas...
+done!
+
+Topological sort: All done!
+Call order result:
+mnist -> hidden1(3) -> hidden2(3) -> hidden3(3) -> hidden4(3) -> hidden5(3) -> hidden6(0) -> loss
+mnist
+D0 <- hidden1 <- D1
+D1 <- hidden2 <- D2
+D2 <- hidden3 <- D3
+D3 <- hidden4 <- D4
+D4 <- hidden5 <- D5
+D5 <- hidden6 <- D6
+D6 <- loss
+Creating actual layers from nodes created earlier.
+---------- Layer to be constructed: Data ----------
+Name of layer: mnist
+Data source :mnist
+Input layer created.
+Allocating space for all images and labels.
+Reading training images...
+done!
+Number of images in total: 10
+Readning training labels...
+done!
+Number of labels in total: 10
+Reading testing images...
+done!
+Number of images in total: 10
+Readning testing labels...
+done!
+Number of labels in total: 10
+Data mapped to "data"
+Data mapped to "label"
+---------- Layer to be constructed: InnerProduct ----------
+Name of layer: hidden1
+Activation function set: TanH
+Trying to find "data".
+"data" found! Storing pointer to data.
+Number of weights per neuron: 784
+Initalizing weights with uniform distribution.
+min -0.05
+max 0.05
+Initalizing weights with constant distribution.
+Data mapped to "ip1"
+Number of neurons in layer 2500
+---------- Layer to be constructed: InnerProduct ----------
+Name of layer: hidden2
+Activation function set: TanH
+Trying to find "ip1".
+"ip1" found! Storing pointer to data.
+Number of weights per neuron: 2500
+Initalizing weights with uniform distribution.
+min -0.05
+max 0.05
+Initalizing weights with constant distribution.
+Data mapped to "ip2"
+Number of neurons in layer 2000
+---------- Layer to be constructed: InnerProduct ----------
+Name of layer: hidden3
+Activation function set: TanH
+Trying to find "ip2".
+"ip2" found! Storing pointer to data.
+Number of weights per neuron: 2000
+Initalizing weights with uniform distribution.
+min -0.05
+max 0.05
+Initalizing weights with constant distribution.
+Data mapped to "ip3"
+Number of neurons in layer 1500
+---------- Layer to be constructed: InnerProduct ----------
+Name of layer: hidden4
+Activation function set: TanH
+Trying to find "ip3".
+"ip3" found! Storing pointer to data.
+Number of weights per neuron: 1500
+Initalizing weights with uniform distribution.
+min -0.05
+max 0.05
+Initalizing weights with constant distribution.
+Data mapped to "ip4"
+Number of neurons in layer 1000
+---------- Layer to be constructed: InnerProduct ----------
+Name of layer: hidden5
+Activation function set: TanH
+Trying to find "ip4".
+"ip4" found! Storing pointer to data.
+Number of weights per neuron: 1000
+Initalizing weights with uniform distribution.
+min -0.05
+max 0.05
+Initalizing weights with constant distribution.
+Data mapped to "ip5"
+Number of neurons in layer 500
+---------- Layer to be constructed: InnerProduct ----------
+Name of layer: hidden6
+Activation function set: identity
+Trying to find "ip5".
+"ip5" found! Storing pointer to data.
+Number of weights per neuron: 500
+Initalizing weights with uniform distribution.
+min -0.05
+max 0.05
+Initalizing weights with constant distribution.
+Data mapped to "ip6"
+Number of neurons in layer 10
+---------- Layer to be constructed: SoftmaxWithLoss ----------
+Name of layer: loss
+Trying to find "ip6".
+"ip6" found! Storing pointer to data.
+Trying to find "label".
+"label" found! Storing pointer to data.
+label_size 10
+Number of layers constructed: 8
+NUmber of hidden layers: 6--- Layer creation completed. Setting up layers. ---
+--- Setting up layer mnist ---
+Delta mapped to "D0"skipping the last 0 images as they do not fit the batch size.
+--- Setup for layer mnist completed. ---
+
+--- Setting up layer hidden1 ---
+Delta mapped to "D1"Trying to find "D0".
+"D0" found! Storing pointer to data.
+--- Setup for layer hidden1 completed. ---
+
+--- Setting up layer hidden2 ---
+Delta mapped to "D2"Trying to find "D1".
+"D1" found! Storing pointer to data.
+--- Setup for layer hidden2 completed. ---
+
+--- Setting up layer hidden3 ---
+Delta mapped to "D3"Trying to find "D2".
+"D2" found! Storing pointer to data.
+--- Setup for layer hidden3 completed. ---
+
+--- Setting up layer hidden4 ---
+Delta mapped to "D4"Trying to find "D3".
+"D3" found! Storing pointer to data.
+--- Setup for layer hidden4 completed. ---
+
+--- Setting up layer hidden5 ---
+Delta mapped to "D5"Trying to find "D4".
+"D4" found! Storing pointer to data.
+--- Setup for layer hidden5 completed. ---
+
+--- Setting up layer hidden6 ---
+Delta mapped to "D6"Trying to find "D5".
+"D5" found! Storing pointer to data.
+--- Setup for layer hidden6 completed. ---
+
+--- Setting up layer loss ---
+setup delta sender
+Trying to find "D6".
+"D6" found! Storing pointer to data.
+--- Setup for layer loss completed. ---
+
+--------- Network constrution completed ---------
+Display data every 1 iteration.
+--- Traning network. ---
+SGD training of network.
+Will train for 10 iterations.
+--- Training iteration 0 ---
+forward time 5e-06
+forward time 0.00954
+forward time 0.021912
+forward time 0.016643
+forward time 0.010961
+forward time 0.005788
+forward time 0.002566
+sm time 0.000714
+delta loss calc0.000157
+ce time 0.000168
+forward time 0.000906
+backward time 1e-06
+backward time 8.8e-05
+backward time 6.4e-05
+backward time 5.8e-05
+backward time 0.000226
+backward time 6.4e-05
+update time 0
+update time 0.013423
+update time 0.022862
+update time 0.014907
+update time 0.006888
+update time 0.002809
+update time 0.000195
+update time 1e-06
+training time so far 0 seconds.
+learning rate 0.001
+--- Training iteration 0 completed ---
+--- Training iteration 1 ---
+forward time 5.1e-05
+forward time 9.2e-05
+forward time 5.7e-05
+forward time 4.2e-05
+forward time 5.3e-05
+forward time 4.4e-05
+forward time 4.3e-05
+sm time 0.017505
+delta loss calc0.00012
+ce time 0.000131
+forward time 0.017656
+backward time 0
+backward time 5.2e-05
+backward time 4.3e-05
+backward time 4.1e-05
+backward time 4.2e-05
+backward time 4.3e-05
+update time 0
+update time 0.000322
+update time 8.7e-05
+update time 8.6e-05
+update time 8.1e-05
+update time 8.4e-05
+update time 8.2e-05
+update time 0
+training time so far 0.019166 seconds.
+learning rate 0.001
+--- Training iteration 1 completed ---
+--- Training iteration 2 ---
+forward time 4e-06
+forward time 0.008665
+forward time 4.7e-05
+forward time 4.5e-05
+forward time 4.2e-05
+forward time 4.4e-05
+forward time 4.4e-05
+sm time 0.017497
+delta loss calc0.000107
+ce time 0.000118
+forward time 0.017631
+backward time 0
+backward time 4.9e-05
+backward time 4.1e-05
+backward time 4.4e-05
+backward time 4.1e-05
+backward time 4.1e-05
+update time 0
+update time 8.6e-05
+update time 8.4e-05
+update time 8.3e-05
+update time 8.1e-05
+update time 8.4e-05
+update time 8.4e-05
+update time 0
+training time so far 0.046554 seconds.
+learning rate 0.001
+--- Training iteration 2 completed ---
+--- Training iteration 3 ---
+forward time 5e-06
+forward time 0.00893
+forward time 4.7e-05
+forward time 4.4e-05
+forward time 4.2e-05
+forward time 4.4e-05
+forward time 4.3e-05
+sm time 0.017511
+delta loss calc0.000105
+ce time 0.000115
+forward time 0.017643
+backward time 0
+backward time 4.9e-05
+backward time 4.1e-05
+backward time 5.2e-05
+backward time 4.4e-05
+backward time 4.1e-05
+update time 0
+update time 8.7e-05
+update time 8.5e-05
+update time 8.1e-05
+update time 8.2e-05
+update time 8.5e-05
+update time 8.4e-05
+update time 0
+training time so far 0.074254 seconds.
+learning rate 0.001
+--- Training iteration 3 completed ---
+--- Training iteration 4 ---
+forward time 4e-06
+forward time 0.008877
+forward time 4.4e-05
+forward time 4.5e-05
+forward time 4.3e-05
+forward time 4.3e-05
+forward time 4.6e-05
+sm time 0.017459
+delta loss calc0.000103
+ce time 0.000113
+forward time 0.017589
+backward time 1e-06
+backward time 5e-05
+backward time 4.1e-05
+backward time 4.1e-05
+backward time 4.3e-05
+backward time 4.2e-05
+update time 0
+update time 8.6e-05
+update time 8.4e-05
+update time 8.4e-05
+update time 9e-05
+update time 8.5e-05
+update time 8.1e-05
+update time 0
+training time so far 0.101839 seconds.
+learning rate 0.001
+--- Training iteration 4 completed ---
+--- Training iteration 5 ---
+forward time 5e-06
+forward time 0.008899
+forward time 4.3e-05
+forward time 4.5e-05
+forward time 4.3e-05
+forward time 4.3e-05
+forward time 4.5e-05
+sm time 0.017705
+delta loss calc0.000106
+ce time 0.000117
+forward time 0.017839
+backward time 0
+backward time 5.1e-05
+backward time 4.4e-05
+backward time 4.2e-05
+backward time 4.3e-05
+backward time 4.1e-05
+update time 0
+update time 8.6e-05
+update time 8.4e-05
+update time 8.4e-05
+update time 8.3e-05
+update time 0.000107
+update time 8.3e-05
+update time 0
+training time so far 0.129702 seconds.
+learning rate 0.001
+--- Training iteration 5 completed ---
+--- Training iteration 6 ---
+forward time 3e-06
+forward time 0.008954
+forward time 4.4e-05
+forward time 4.5e-05
+forward time 4.5e-05
+forward time 4.2e-05
+forward time 4.4e-05
+sm time 0.017451
+delta loss calc0.000102
+ce time 0.000112
+forward time 0.01758
+backward time 0
+backward time 4.9e-05
+backward time 4.4e-05
+backward time 4.2e-05
+backward time 4e-05
+backward time 4.3e-05
+update time 0
+update time 8.5e-05
+update time 8.2e-05
+update time 8.3e-05
+update time 8.3e-05
+update time 8.1e-05
+update time 8.3e-05
+update time 0
+training time so far 0.157322 seconds.
+learning rate 0.001
+--- Training iteration 6 completed ---
+--- Training iteration 7 ---
+forward time 5e-06
+forward time 0.008908
+forward time 4.6e-05
+forward time 4.3e-05
+forward time 4.4e-05
+forward time 4.3e-05
+forward time 4.3e-05
+sm time 0.017465
+delta loss calc0.000102
+ce time 0.000112
+forward time 0.017593
+backward time 0
+backward time 4.8e-05
+backward time 4.4e-05
+backward time 4.3e-05
+backward time 4.4e-05
+backward time 4.3e-05
+update time 0
+update time 8.5e-05
+update time 8.4e-05
+update time 8.3e-05
+update time 8.2e-05
+update time 8.4e-05
+update time 8.3e-05
+update time 0
+training time so far 0.18492 seconds.
+learning rate 0.001
+--- Training iteration 7 completed ---
+--- Training iteration 8 ---
+forward time 4e-06
+forward time 0.0089
+forward time 4.7e-05
+forward time 4.2e-05
+forward time 4.3e-05
+forward time 4.4e-05
+forward time 4.3e-05
+sm time 0.017511
+delta loss calc0.000104
+ce time 0.000114
+forward time 0.017642
+backward time 0
+backward time 5.2e-05
+backward time 4.1e-05
+backward time 4.3e-05
+backward time 4.1e-05
+backward time 4.2e-05
+update time 0
+update time 8.5e-05
+update time 8.4e-05
+update time 8.3e-05
+update time 8.4e-05
+update time 8.4e-05
+update time 8.4e-05
+update time 1e-06
+training time so far 0.212558 seconds.
+learning rate 0.001
+--- Training iteration 8 completed ---
+--- Training iteration 9 ---
+forward time 3e-06
+forward time 0.008918
+forward time 6e-05
+forward time 4.7e-05
+forward time 4.3e-05
+forward time 4.7e-05
+forward time 4.3e-05
+sm time 0.017465
+delta loss calc0.000103
+ce time 0.000114
+forward time 0.017596
+backward time 0
+backward time 4.8e-05
+backward time 4.2e-05
+backward time 4.3e-05
+backward time 4.2e-05
+backward time 4.1e-05
+update time 0
+update time 8.6e-05
+update time 8.4e-05
+update time 8.2e-05
+update time 8.5e-05
+update time 8.4e-05
+update time 8.3e-05
+update time 0
+training time so far 0.240187 seconds.
+learning rate 0.001
+--- Training iteration 9 completed ---
+Training completed. Finished training 10 iterations.
+Training time 0.370668
+--- Training completed. Test phase beginning. ---
+Testing of network.
+----------- Test Preparation. ---------------
+Layer mnist doing test preparation.
+skipping the last 0 images as they do not fit the batch size.
+Layer hidden1 doing test preparation.
+Layer hidden2 doing test preparation.
+Layer hidden3 doing test preparation.
+Layer hidden4 doing test preparation.
+Layer hidden5 doing test preparation.
+Layer hidden6 doing test preparation.
+Layer loss doing test preparation.
+--- Test Preparation Completed! ---
+Will test for 10 iterations.
+--- Test iteration 0 ---
+forward time 4e-06
+forward time 0.008856
+forward time 4.7e-05
+forward time 4.6e-05
+forward time 4.3e-05
+forward time 4.3e-05
+forward time 4.6e-05
+sm 0.017451
+WRONG
+correctness 0.00012
+forward time 0.01759
+testing time so far0.266975
+--- Test iteration 0 completed ---
+--- Test iteration 1 ---
+forward time 4e-06
+forward time 7e-05
+forward time 4.5e-05
+forward time 4.5e-05
+forward time 4.4e-05
+forward time 4.2e-05
+forward time 4.5e-05
+sm 0.017437
+WRONG
+correctness 0.000108
+forward time 0.017565
+testing time so far0.284891
+--- Test iteration 1 completed ---
+--- Test iteration 2 ---
+forward time 5e-06
+forward time 7e-05
+forward time 4.4e-05
+forward time 4.2e-05
+forward time 4.6e-05
+forward time 4.3e-05
+forward time 4.3e-05
+sm 0.017479
+CORRECT
+correctness 0.000104
+forward time 0.017602
+testing time so far0.302842
+--- Test iteration 2 completed ---
+--- Test iteration 3 ---
+forward time 4e-06
+forward time 6.8e-05
+forward time 4.7e-05
+forward time 4.5e-05
+forward time 4.4e-05
+forward time 4.3e-05
+forward time 4.3e-05
+sm 0.017494
+WRONG
+correctness 0.000104
+forward time 0.017618
+testing time so far0.320809
+--- Test iteration 3 completed ---
+--- Test iteration 4 ---
+forward time 5e-06
+forward time 6.7e-05
+forward time 4.6e-05
+forward time 4.3e-05
+forward time 4.3e-05
+forward time 4.5e-05
+forward time 4.4e-05
+sm 0.017471
+WRONG
+correctness 0.000109
+forward time 0.0176
+testing time so far0.338758
+--- Test iteration 4 completed ---
+--- Test iteration 5 ---
+forward time 4e-06
+forward time 6.8e-05
+forward time 4.4e-05
+forward time 4.5e-05
+forward time 4.4e-05
+forward time 4.5e-05
+forward time 4.5e-05
+sm 0.01751
+CORRECT
+correctness 0.000104
+forward time 0.017633
+testing time so far0.356741
+--- Test iteration 5 completed ---
+--- Test iteration 6 ---
+forward time 5e-06
+forward time 6.8e-05
+forward time 4.5e-05
+forward time 4.7e-05
+forward time 4.3e-05
+forward time 4.2e-05
+forward time 4.4e-05
+sm 0.017418
+WRONG
+correctness 0.000104
+forward time 0.017541
+testing time so far0.374634
+--- Test iteration 6 completed ---
+--- Test iteration 7 ---
+forward time 4e-06
+forward time 6.9e-05
+forward time 4.4e-05
+forward time 4.2e-05
+forward time 4.5e-05
+forward time 4.3e-05
+forward time 4.5e-05
+sm 0.017556
+WRONG
+correctness 0.000114
+forward time 0.017694
+testing time so far0.392678
+--- Test iteration 7 completed ---
+--- Test iteration 8 ---
+forward time 5e-06
+forward time 7.1e-05
+forward time 4.4e-05
+forward time 4.3e-05
+forward time 4.5e-05
+forward time 4.2e-05
+forward time 4.3e-05
+sm 0.017484
+WRONG
+correctness 0.000104
+forward time 0.017609
+testing time so far0.410634
+--- Test iteration 8 completed ---
+--- Test iteration 9 ---
+forward time 4e-06
+forward time 7e-05
+forward time 4.8e-05
+forward time 4.4e-05
+forward time 4.5e-05
+forward time 4.4e-05
+forward time 4.3e-05
+sm 0.01743
+WRONG
+correctness 0.000268
+forward time 0.017717
+testing time so far0.428705
+--- Test iteration 9 completed ---
+Test completed: All data used.
+Finished testing 10 test iterations.
+--- Post Test ---
+Layer mnist doing post test.
+Layer hidden1 doing post test.
+Layer hidden2 doing post test.
+Layer hidden3 doing post test.
+Layer hidden4 doing post test.
+Layer hidden5 doing post test.
+Layer hidden6 doing post test.
+Layer loss doing post test.
+--- Post Test Completed! ---
+Test time 0.188523
+--- Test completed. ---
+Network Solving done. Time for solution: 2.58389
+Release resources...
+Completed!
+Good bye!
+==27027== Generated result file: /media/home/ubuntu/danjo752/ann/networks/ciresan_2500_2000_1500_1000_500_10/data/10_CUDA_1.log.nvvp
+[INFO] [38;5;2mProfiler Successed.[m(B

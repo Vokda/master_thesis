@@ -1,0 +1,345 @@
+#simple ann that will learn the mnist 
+name: "Ciresan 9x1000"
+layer
+{
+	name: "mnist"
+	type: "Data"
+	data_param
+	{
+#		all data should be in the data directory in its own subdirectory
+#		e.g.: project/data/data_set/
+		source: "mnist"
+		batch_size: 1
+	}
+	transform_param 
+	{
+		#subtaction is always done first in caffe 
+		mean_value: 127.5
+		#scale the data set to -1 1 
+		# this is done by X/127.5 - 1
+		scale: 0.00784313725
+	}
+	top: "data"
+	top: "label"
+}
+
+#1st layer
+layer
+{
+	name: "hidden1"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 1000
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+            value: 1
+		}
+	}
+	top: "ip1"
+	bottom: "data"
+}
+
+layer
+{
+	name: "Tanh1"
+    type: "Tanh"
+    bottom: "ip1"
+	top: "ip1"
+}
+#2nd layer
+layer
+{
+	name: "hidden2"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 1000
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+            value: 1
+		}
+	}
+	top: "ip2"
+	bottom: "ip1"
+}
+
+layer
+{
+	name: "Tanh2"
+    type: "Tanh"
+    bottom: "ip2"
+	top: "ip2"
+}
+
+#3rd layer
+layer
+{
+	name: "hidden3"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 1000
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+            value: 1
+		}
+	}
+	top: "ip3"
+	bottom: "ip2"
+}
+
+
+layer
+{
+	name: "Tanh3"
+    type: "Tanh"
+    bottom: "ip3"
+	top: "ip3"
+}
+
+#4th layer
+layer
+{
+	name: "hidden4"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 1000
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+            value: 1
+		}
+	}
+	top: "ip4"
+	bottom: "ip3"
+}
+
+
+layer
+{
+	name: "Tanh4"
+    type: "Tanh"
+    bottom: "ip4"
+	top: "ip4"
+}
+
+#5th layer
+layer
+{
+	name: "hidden5"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 1000
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+            value: 1
+		}
+	}
+	top: "ip5"
+	bottom: "ip4"
+}
+
+layer
+{
+	name: "Tanh5"
+    type: "Tanh"
+    bottom: "ip5"
+	top: "ip5"
+}
+
+#6th layer
+layer
+{
+	name: "hidden6"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 1000
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+            value: 1
+		}
+	}
+	top: "ip6"
+	bottom: "ip5"
+}
+
+
+layer
+{
+	name: "Tanh6"
+    type: "Tanh"
+    bottom: "ip6"
+	top: "ip6"
+}
+
+#7th layer
+layer
+{
+	name: "hidden7"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 1000
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+            value: 1
+		}
+	}
+	top: "ip7"
+	bottom: "ip6"
+}
+
+layer
+{
+	name: "Tanh7"
+    type: "Tanh"
+    bottom: "ip7"
+	top: "ip7"
+}
+
+#8th layer
+layer
+{
+	name: "hidden8"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 1000
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+            value: 1
+		}
+	}
+	top: "ip8"
+	bottom: "ip7"
+}
+
+layer
+{
+	name: "Tanh8"
+    type: "Tanh"
+    bottom: "ip8"
+	top: "ip8"
+}
+
+#9th layer
+layer
+{
+	name: "hidden9"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 1000
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+            value: 1
+		}
+	}
+	top: "ip9"
+	bottom: "ip8"
+}
+
+layer
+{
+	name: "Tanh9"
+    type: "Tanh"
+    bottom: "ip9"
+	top: "ip9"
+}
+
+layer
+{
+	name: "hidden10"
+	type: "InnerProduct"
+	inner_product_param
+	{
+		num_output: 10
+		weight_filler 
+		{
+			min: -0.05
+			max: 0.05
+			type: "uniform"
+		}
+		bias_filler
+		{
+			type: "constant"
+            value: 1
+		}
+	}
+	top: "ip10"
+	bottom: "ip9"
+}
+
+layer
+{
+	name: "loss"
+	type: "SoftmaxWithLoss"
+	bottom: "ip10"
+	bottom: "label"
+}
